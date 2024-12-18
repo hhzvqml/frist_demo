@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Upload</title>
+</head>
+<body>
+<input type="file" id="folder" webkitdirectory directory multiple />
+<button onclick="uploadFolder()">Upload</button>
+
+<script>
+    function uploadFolder() {
+        const folderInput = document.getElementById('folder');
+        const files = folderInput.files;
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+            formData.append('folder', files[i]);
+        }
+        fetch('/api/files/uploadFolder', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(result => alert(result))
+            .catch(error => alert('Error:', error));
+    }
+</script>
+</body>
+</html>
